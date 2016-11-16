@@ -1,0 +1,19 @@
+{
+  "name": "react-hello-world",
+  "version": "1.0.0",
+  "description": "Tutorial sobre reactjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tulinho.github.com/react-hello-world.git"
+  },
+  "author": "Marco Túlio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tulinho.github.com/react-hello-world/issues"
+  },
+  "homepage": "https://github.com/tulinho.github.com/react-hello-world#readme"
+}
