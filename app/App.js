@@ -1,8 +1,9 @@
 let React = require('react'); // importa a lib react
 let reactDOM = require('react-dom'); // importa a lib react-dom
 
-let ContactItem = require('./components/ContactItem.js');
-let ContactForm = require('./components/ContactForm.js');
+var ContactItem = require('./components/ContactItem.js');
+var ContactForm = require('./components/ContactForm.js');
+var ContactView = require('./components/ContactView.js');
 
 
 let contacts = [
@@ -50,13 +51,26 @@ var listElements = contacts
     });
   });
 
-let rootElement = React.createElement('div', {},
+/*let rootElement = React.createElement('div', {},
   React.createElement('h3', {}, 'Contacts'),
   React.createElement('ul', {}, listElements),
   React.createElement(ContactForm, {
-    contact: {}
+    contact: {},
+    onChange: function (contact) {
+      console.log(contact);
+    }
   })
-);
+);*/
 
+var renderContactView = function(contact) {
+  let rootElement = React.createElement(ContactView, {
+    contacts: listElements,
+    newContact: contact,
+    onChange: function(contact){
+      console.log(contact);
+    }
+  });
+  reactDOM.render(rootElement, document.getElementById('app'));
+}
+renderContactView({});
 
-reactDOM.render(rootElement, document.getElementById('app'));

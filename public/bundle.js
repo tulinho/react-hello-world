@@ -47,8 +47,9 @@
 	let React = __webpack_require__(1); // importa a lib react
 	let reactDOM = __webpack_require__(34); // importa a lib react-dom
 
-	let ContactItem = __webpack_require__(174);
-	let ContactForm = __webpack_require__(173);
+	var ContactItem = __webpack_require__(172);
+	var ContactForm = __webpack_require__(173);
+	var ContactView = __webpack_require__(174);
 
 	let contacts = [{
 	  key: 1,
@@ -87,11 +88,28 @@
 	  });
 	});
 
-	let rootElement = React.createElement('div', {}, React.createElement('h3', {}, 'Contacts'), React.createElement('ul', {}, listElements), React.createElement(ContactForm, {
-	  contact: {}
-	}));
+	/*let rootElement = React.createElement('div', {},
+	  React.createElement('h3', {}, 'Contacts'),
+	  React.createElement('ul', {}, listElements),
+	  React.createElement(ContactForm, {
+	    contact: {},
+	    onChange: function (contact) {
+	      console.log(contact);
+	    }
+	  })
+	);*/
 
-	reactDOM.render(rootElement, document.getElementById('app'));
+	var renderContactView = function (contact) {
+	  let rootElement = React.createElement(ContactView, {
+	    contacts: listElements,
+	    newContact: contact,
+	    onChange: function (contact) {
+	      console.log(contact);
+	    }
+	  });
+	  reactDOM.render(rootElement, document.getElementById('app'));
+	};
+	renderContactView({});
 
 /***/ },
 /* 1 */
@@ -21461,43 +21479,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 172 */,
-/* 173 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(1); // importa a lib react
-
-	var ContactForm = React.createClass({
-	  displayName: 'ContactForm',
-
-	  propTypes: {
-	    contact: React.PropTypes.object.isRequired
-	  },
-	  render: function () {
-	    return React.createElement('form', {
-	      src: '#'
-	    }, React.createElement('input', {
-	      type: 'text',
-	      value: this.props.contact.name,
-	      placeholder: 'Name'
-	    }), React.createElement('input', {
-	      type: 'text',
-	      value: this.props.contact.email,
-	      placeholder: 'Email'
-	    }), React.createElement('textarea', {
-	      value: this.props.contact.description,
-	      placeholder: 'Description'
-	    }), React.createElement('button', {
-	      type: 'submit',
-	      className: 'waves-effect waves-light btn'
-	    }, 'Submit'));
-	  }
-	});
-
-	module.exports = ContactForm;
-
-/***/ },
-/* 174 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1); // importa a lib react
@@ -21522,6 +21504,87 @@
 	});
 
 	module.exports = ContactItem;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1); // importa a lib react
+
+	var ContactForm = React.createClass({
+	  displayName: 'ContactForm',
+
+	  propTypes: {
+	    contact: React.PropTypes.object.isRequired,
+	    onChange: React.PropTypes.func.isRequired
+	  },
+	  onNameChangedHandler: function (event) {
+	    var newContact = Object.assign({}, this.props.contact, { name: event.target.value });
+	    (this.props.onChange || function () {})(newContact);
+	  },
+	  onEmailChangedHandler: function (event) {
+	    var newContact = Object.assign({}, this.props.contact, { email: event.target.value });
+	    (this.props.onChange || function () {})(newContact);
+	  },
+	  onDescriptionChangedHandler: function (event) {
+	    var newContact = Object.assign({}, this.props.contact, { description: event.target.value });
+	    (this.props.onChange || function () {})(newContact);
+	  },
+	  render: function () {
+	    return React.createElement('form', {
+	      src: '#'
+	    }, React.createElement('input', {
+	      type: 'text',
+	      value: this.props.contact.name,
+	      placeholder: 'Name',
+	      onChange: this.onNameChangedHandler
+	    }), React.createElement('input', {
+	      type: 'text',
+	      value: this.props.contact.email,
+	      placeholder: 'Email',
+	      onChange: this.onEmailChangedHandler
+	    }), React.createElement('textarea', {
+	      value: this.props.contact.description,
+	      placeholder: 'Description',
+	      onChange: this.onDescriptionChangedHandler
+	    }), React.createElement('button', {
+	      type: 'submit',
+	      className: 'waves-effect waves-light btn'
+	    }, 'Submit'));
+	  }
+	});
+
+	module.exports = ContactForm;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	let React = __webpack_require__(1); // importa a lib react
+	let ContactForm = __webpack_require__(173);
+
+	var ContactView = React.createClass({
+	  displayName: 'ContactView',
+
+	  propTyés: {
+	    contacts: React.PropTypes.array.isRequered,
+	    newContact: React.PropTypes.object.isRequired,
+	    onChange: React.PropTypes.func
+	  },
+	  onChangeHandler: function (contact) {
+	    if (this.props.onChange) {
+	      this.props.onChange(contact);
+	    }
+	  },
+	  render: function () {
+	    return React.createElement('div', {}, React.createElement('h3', {}, 'Contacts'), React.createElement('ul', {}, this.props.contacts), React.createElement(ContactForm, {
+	      contact: this.props.newContact,
+	      onChange: this.onChangeHandler
+	    }));
+	  }
+	});
+
+	module.exports = ContactView;
 
 /***/ }
 /******/ ]);
